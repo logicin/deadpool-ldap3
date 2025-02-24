@@ -79,6 +79,7 @@ impl managed::Manager for Manager {
     }
 }
 
+#[cfg(feature = "rt_tokio_1")]
 #[tokio::test]
 async fn test_ldap() {
     let cfg = Config {
