@@ -1,0 +1,32 @@
+[package]
+name = "deadpool-ldap3"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.80"
+authors = ["Logicin <lx224466@gmail.com>"]
+description = "Dead simple async pool for ldap"
+keywords = ["async", "pool", "ldap"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/logicin/deadpool-ldap3"
+readme = "/README.md"
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+
+[features]
+default = ["rt_tokio_1"]
+rt_tokio_1 = ["deadpool/rt_tokio_1"]
+rt_async-std_1 = ["deadpool/rt_async-std_1"]
+serde = ["deadpool/serde", "dep:serde"]
+tracing = ["deadpool-sync/tracing"]
+
+[dependencies]
+deadpool = { version = "0.12.0", default-features = false, features = ["managed"] }
+deadpool-sync = { version = "0.1.1" }
+serde = { package = "serde", version = "1.0", features = ["derive", ], optional = true }
+ldap3 = "0.11"
+
+[dev-dependencies]
+tokio = { version = "1.0", features = ["sync", "macros", "rt-multi-thread"] }
+async-std = { version = "1.0", features = ["attributes"] }
