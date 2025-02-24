@@ -8,7 +8,7 @@ description = "Dead simple async pool for ldap"
 keywords = ["async", "pool", "ldap"]
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/logicin/deadpool-ldap3"
-readme = "/README.md"
+readme = "./README.md"
 
 [package.metadata.docs.rs]
 all-features = true
