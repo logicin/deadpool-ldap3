@@ -79,11 +79,10 @@ impl managed::Manager for Manager {
     }
 }
 
-#[cfg(feature = "rt_tokio_1")]
 #[tokio::test]
 async fn test_ldap() {
     let cfg = Config {
-        url: "ldap://10.76.60.77:2389".to_string(),
+        url: "ldap://127.0.0.1:389".to_string(),
         bind_dn: Some("cn=admin,dc=demo,dc=com".to_string()),
         bind_password: Some("123456".to_string()),
         pool: None,
