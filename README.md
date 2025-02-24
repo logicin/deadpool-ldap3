@@ -24,7 +24,6 @@ use deadpool_ldap::{Config, Runtime};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    assert_eq!(result, 1);
     let cfg = Config {
         url: "ldap://127.0.0.1:389".to_string(),
         bind_dn: Some("cn=admin,dc=demo,dc=com".to_string()),
@@ -34,7 +33,6 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let pool = cfg.create_pool(Runtime::Tokio1).unwrap();
     let mut conn = pool.get().await.unwrap();
     conn.simple_bind("admin", "123456").await.unwrap();
-    assert_eq!(result, 1);
     Ok(())
 }
 ```
