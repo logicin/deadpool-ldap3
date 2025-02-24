@@ -1,4 +1,4 @@
-mod config;
+pub mod config;
 
 use deadpool::managed::{Metrics, RecycleError, RecycleResult};
 use deadpool::{managed, Runtime};
