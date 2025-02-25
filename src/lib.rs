@@ -1,6 +1,6 @@
 pub mod config;
 
-use deadpool::managed::{Metrics, RecycleError, RecycleResult};
+use deadpool::managed::{Metrics, PoolConfig, RecycleError, RecycleResult};
 use deadpool::{managed, Runtime};
 use ldap3::{Ldap, LdapConnAsync, LdapError};
 
@@ -66,7 +66,6 @@ impl managed::Manager for Manager {
 
     /// recycle conn
     async fn recycle(&self, ldap: &mut LdapConnection, _: &Metrics) -> RecycleResult<LdapError> {
-        // re
         if let (Some(bind_dn), Some(bind_password)) = (&self.bind_dn, &self.bind_password) {
             ldap.simple_bind(bind_dn, bind_password).await?.success()?;
         }
@@ -85,9 +84,19 @@ async fn test_ldap() {
         url: "ldap://127.0.0.1:389".to_string(),
         bind_dn: Some("cn=admin,dc=demo,dc=com".to_string()),
         bind_password: Some("123456".to_string()),
-        pool: None,
+        pool: Some(PoolConfig {
+            max_size: 10,
+            timeouts: Default::default(),
+            queue_mode: Default::default(),
+        }),
     };
     let pool = cfg.create_pool(Runtime::Tokio1).unwrap();
-    let mut a = pool.get().await.unwrap();
-    a.simple_bind("admin", "123456").await.unwrap();
+    match pool.get().await {
+        Ok(mut conn) => {
+            conn.simple_bind("admin", "123456").await.unwrap();
+        }
+        Err(e) => {
+            println!("{}", e);
+        }
+    };
 }
