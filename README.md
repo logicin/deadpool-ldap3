@@ -3,7 +3,7 @@
 Deadpool is a dead simple async pool for connections and objects
 of any type.
 
-This crate implements a [`deadpool3`](https://crates.io/crates/deadpool)
+This crate implements a [`deadpool`](https://crates.io/crates/deadpool)
 manager for [`ldap3`](https://crates.io/crates/ldap3)
 and provides a wrapper that ensures correct use of the connection
 inside a separate thread.
